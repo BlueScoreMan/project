@@ -18,7 +18,7 @@
   },
   "scripts": {
     "start": "node dist/server.js",
-    "dev": "NODE_ENV=development nodemon --exec babel-noode src/server.js",
+    "dev": "NODE_ENV=development nodemon --exec babel-node src/server.js",
     "debug": "npm run dev -- --inspect",
     "build": "babel ./src --out-dir ./dist",
     "test": "jest --runInBand",
