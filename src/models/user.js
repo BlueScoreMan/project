@@ -1,6 +1,7 @@
 import { Model, DataTypes } from 'sequelize';
 import bcrypt from 'bcrypt';
 import environment from '../config/environment';
+import { options } from 'pg/lib/defaults';
 
 export default (sequelize) => {
     class User extends Model {
@@ -14,7 +15,7 @@ export default (sequelize) => {
         }
 
         static async createNewUser({ email, password, roles, username, firstName, lastName, refreshToken }) {
-            return sequelize.transaction(async () => {
+            return sequelize.transaction(() => {
 
                 let rolesToSave = [];
 
@@ -22,7 +23,7 @@ export default (sequelize) => {
                     rolesToSave = roles.map((role) => ({ role }));
                 }
 
-                await User.create({ email, password, username, firstName, lastName, RefreshToken: { token: refreshToken }, Roles: rolesToSave },
+                return User.create({ email, password, username, firstName, lastName, RefreshToken: { token: refreshToken }, Roles: rolesToSave },
                     { include: [User.RefreshToken, User.Roles] });
             });
         }
@@ -91,6 +92,10 @@ export default (sequelize) => {
     User.beforeSave(async (user, options) => {
         const hashedPassword = await User.hashPassword(user.password);
         user.password = hashedPassword;
+    });
+
+    User.afterCreate((user, options) => {
+        delete user.dataValues.password;
     });
 
     return User;
