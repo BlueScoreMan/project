@@ -1,7 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
 import bcrypt from 'bcrypt';
 import environment from '../config/environment';
-import { options } from 'pg/lib/defaults';
 
 export default (sequelize) => {
     class User extends Model {
