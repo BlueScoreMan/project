@@ -111,6 +111,50 @@ describe('User', () => {
                 expect(errorObj.path).toEqual('username');
             });
 
+            it('should error if email is not unique', async () => {
+                const { User } = models;
+                const data = {
+                    email: 'test@example.com',
+                    username: 'test',
+                    password: 'Test123#',
+                };
+                let error;
+                try {
+                    await User.createNewUser(data);
+                    await User.createNewUser(data);
+                } catch (err) {
+                    error = err;
+                }
+                expect(error).toBeDefined();
+                expect(error.errors.length).toEqual(1);
+                const errorObj = error.errors[0];
+                expect(errorObj.message).toEqual('email must be unique');
+                expect(errorObj.path).toEqual('email');
+            });
+        });
+    });
+
+    describe('scopes', () => {
+        let user;
+
+        beforeEach(async () => {
+            user = await TestsHelpers.createNewUser();
+        });
+
+        describe('defaultScope', () => {
+            it('should return a user without a password', async () => {
+                const { User } = models;
+                const userFound = await User.findByPk(user.id);
+                expect(userFound.password).toBeUndefined();
+            })
+        });
+
+        describe('withPassword', () => {
+            it('should return a user with the password', async () => {
+                const { User } = models;
+                const userFound = await User.scope('withPassword').findByPk(user.id);
+                expect(userFound.password).toBeDefined();
+            });
         });
     });
 });
