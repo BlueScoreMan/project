@@ -17,10 +17,10 @@
     "sequelize-cli": "^6.4.1"
   },
   "scripts": {
-    "start": "node dist/server.js",
-    "dev": "NODE_ENV=development nodemon --exec babel-node src/server.js",
+    "start": "react-scripts start && node dist/server.js",
+    "dev": "react-scripts start && NODE_ENV=development nodemon --exec babel-node src/server.js",
     "debug": "npm run dev -- --inspect",
-    "build": "babel ./src --out-dir ./dist",
+    "build": "react-scripts build && babel ./src --out-dir ./dist",
     "test": "jest --runInBand",
     "test:watch": "npm test -- --watch",
     "test:coverage": "npm test -- --coverage",
