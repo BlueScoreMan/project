@@ -3,8 +3,8 @@ import './App.css';
 
 const Progress = props => {
   const { progress } = props
-  return (<div class="progress">
-    <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style={{ width: progress + '%' }}>
+  return (<div className="progress">
+    <div className="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style={{ width: progress + '%' }}>
       {progress + '%'}
     </div>
   </div>)
