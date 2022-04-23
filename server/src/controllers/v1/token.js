@@ -18,7 +18,7 @@ router.post(
         if (!savedToken || !savedToken.token) {
             return res
                 .status(401)
-                .message({ success: false, message: 'You must log in first' });
+                .send({ success: false, message: 'You must log in first' });
         }
 
         const payload = { email };
@@ -26,7 +26,7 @@ router.post(
 
         return res
             .status(200)
-            .message({
+            .send({
                 success: true,
                 data: { accessToken: newAccessToken },
                 message: 'Successfully logged in'
