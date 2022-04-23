@@ -1,7 +1,7 @@
-import TestsHelpers from '../tests-helpers';
-import models from '../../src/models';
+import TestsHelpers from '../../tests-helpers';
+import models from '../../../src/models';
 import request from 'supertest';
-import JWTUtils from '../../src/utils/jwt-utils';
+import JWTUtils from '../../../src/utils/jwt-utils';
 
 describe('token', () => {
     let app;
